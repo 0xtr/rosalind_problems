@@ -29,20 +29,23 @@ rabbits produces a litter of k rabbit pairs (instead of only 1 pair).
 """
 from builtins import range
 
-total_pairs = 1
 months = 5
-pairs_produced_per_pair = 3
+pairs_born_per_pair = 3
 
-rabbits_maturing = 0
-rabbits_pending = 0
-rabbits_total = 0
-
-# all wrong
+pairs_total = 0
+pairs_adult = 0
+pairs_maturing = 0
+pairs_to_be_born = 1
 
 for i in range(0, months):
-    rabbits_total += rabbits_maturing
-    rabbits_maturing = rabbits_pending / 2
-    rabbits_pending = (total_pairs * pairs_produced_per_pair)
-    total_pairs = rabbits_total / 2
+    if pairs_maturing > 0:
+        pairs_adult += pairs_maturing
+        pairs_maturing = 0
 
-print(total_pairs)
+    if pairs_to_be_born > 0:
+        pairs_total += pairs_to_be_born
+        pairs_maturing = pairs_to_be_born
+
+    pairs_to_be_born = pairs_adult * pairs_born_per_pair
+
+print(pairs_total)
