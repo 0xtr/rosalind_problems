@@ -18,49 +18,50 @@ month if all rabbits live for m months.
 """
 
 pairs_born_per_pair = 1
-months = 92
-rabbit_lifespan = 18
+months = 91
+rabbit_lifespan = 16
 
 pairs_total = 0
 pairs_adult = 0
 pairs_maturing = 0
-pairs_to_be_born = 1
+pairs_to_be_born = 0
 pairs_dying_in_n_months = {}
 
-for month in range(0, rabbit_lifespan+1):
+for month in range(0, rabbit_lifespan):
     pairs_dying_in_n_months[month] = 0
 
-pairs_dying_in_n_months[rabbit_lifespan] = pairs_to_be_born
+pairs_dying_in_n_months[rabbit_lifespan-1] = 1
 
 for i in range(0, months):
     if pairs_maturing > 0:
         pairs_adult += pairs_maturing
         pairs_maturing = 0
 
+    if i is 0:
+        pairs_total = pairs_maturing = 1
+
     if pairs_to_be_born > 0:
         pairs_total += pairs_to_be_born
         pairs_maturing = pairs_to_be_born
+        pairs_dying_in_n_months[rabbit_lifespan-1] += pairs_maturing
 
-        max_lifespan = len(pairs_dying_in_n_months)
-        print("lifespans: " + str(max_lifespan))
-        pairs_dying_in_n_months[max_lifespan-1] += pairs_maturing
+    pairs_to_be_born = pairs_adult * pairs_born_per_pair
+
+    if i == months-1:
+        break
 
     keys = list(pairs_dying_in_n_months.keys())
     for key in range(0, len(keys)):
         if key is 0 and pairs_dying_in_n_months[key] > 0:
             print("some rabbits died :( (" + str(pairs_dying_in_n_months[key]) + ")")
             pairs_adult -= pairs_dying_in_n_months[key]
+            pairs_total -= pairs_dying_in_n_months[key]
             pairs_dying_in_n_months[key] = 0
 
-        if key+1 < len(keys):
-            pairs_dying_in_n_months[key] = pairs_dying_in_n_months.get(key+1)
-            pairs_dying_in_n_months[key+1] = 0
-        else:
-            pairs_dying_in_n_months[key] = 0
+        if key + 1 < len(keys):
+            pairs_dying_in_n_months[key] = pairs_dying_in_n_months.get(key + 1)
+            pairs_dying_in_n_months[key + 1] = 0
 
-        print(pairs_dying_in_n_months.values())
-
-    pairs_to_be_born = pairs_adult * pairs_born_per_pair
 
 print("")
 print(pairs_total)
