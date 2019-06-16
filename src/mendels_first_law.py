@@ -25,6 +25,16 @@ Return: The probability that two randomly selected mating organisms will produce
 allele (and thus displaying the dominant phenotype). Assume that any two organisms can mate.
 """
 
-k = 2
-m = 2
-n = 2
+k = 21  # AA
+m = 26  # Aa / aA
+n = 30  # aa
+total = k + m + n
+
+combos = {
+    0: 'AA',
+    1: 'Aa',
+    2: 'aA',
+    3: 'aa',
+}
+
+# cant figure this one out, abandoning
