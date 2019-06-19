@@ -15,6 +15,8 @@ strings.
 
 # discard FASTA identifiers
 
+dna = []
+'''
 dna = [
     "ATCCAGCT",
     "GGGCAACT",
@@ -24,6 +26,27 @@ dna = [
     "ATGCCATT",
     "ATGGCACT"
 ]
+'''
+f = open("temp_crap/rosalind_cons.txt")
+data = f.readlines()
+temp_str = ""
+in_fasta = False
+for d in data:
+    if ">" in d:
+        if in_fasta is True:
+            print("RESET")
+            in_fasta = False
+            dna.append(temp_str)
+            temp_str = ""
+        else:
+            in_fasta = True
+        continue
+
+    temp_str += d.strip("\n")
+    print(temp_str)
+
+f.close()
+
 a = [0] * (len(dna[0]))
 c = [0] * (len(dna[0]))
 g = [0] * (len(dna[0]))
@@ -32,7 +55,7 @@ t = [0] * (len(dna[0]))
 for horizontal in range(0, len(dna[0])):
     # print("\n")
     for vertical in range(0, len(dna)):
-        # print(dna[vertical][horizontal])
+        print("char "  + str(dna[vertical][horizontal]))
         if dna[vertical][horizontal] is "A":
             a[horizontal] += 1
             # print(str(horizontal) + " its A " + str(dna[vertical][horizontal]) + " so the value is now " + str(a[horizontal]))
