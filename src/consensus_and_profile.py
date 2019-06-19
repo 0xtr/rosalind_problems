@@ -17,6 +17,7 @@ strings.
 
 dna = []
 '''
+example:
 dna = [
     "ATCCAGCT",
     "GGGCAACT",
@@ -27,14 +28,15 @@ dna = [
     "ATGGCACT"
 ]
 '''
+
 f = open("temp_crap/rosalind_cons.txt")
 data = f.readlines()
 temp_str = ""
 in_fasta = False
+
 for d in data:
     if ">" in d:
         if in_fasta is True:
-            print("RESET")
             in_fasta = False
             dna.append(temp_str)
             temp_str = ""
@@ -43,7 +45,6 @@ for d in data:
         continue
 
     temp_str += d.strip("\n")
-    print(temp_str)
 
 f.close()
 
@@ -53,12 +54,9 @@ g = [0] * (len(dna[0]))
 t = [0] * (len(dna[0]))
 
 for horizontal in range(0, len(dna[0])):
-    # print("\n")
     for vertical in range(0, len(dna)):
-        print("char "  + str(dna[vertical][horizontal]))
         if dna[vertical][horizontal] is "A":
             a[horizontal] += 1
-            # print(str(horizontal) + " its A " + str(dna[vertical][horizontal]) + " so the value is now " + str(a[horizontal]))
 
         if dna[vertical][horizontal] is "C":
             c[horizontal] += 1
@@ -68,21 +66,6 @@ for horizontal in range(0, len(dna[0])):
 
         if dna[vertical][horizontal] is "T":
             t[horizontal] += 1
-
-    # print(str(a[horizontal]) + " " + str(c[horizontal]) + " " + str(g[horizontal]) + " " + str(t[horizontal]))
-
-for j in a:
-    print(str(j) + " ", end="")
-print("\n")
-for j in c:
-    print(str(j) + " ", end="")
-print("\n")
-for j in g:
-    print(str(j) + " ", end="")
-print("\n")
-for j in t:
-    print(str(j) + " ", end="")
-print("\n")
 
 consensus = ""
 for r in range(0, len(a)):
@@ -101,7 +84,6 @@ for r in range(0, len(a)):
     if t[r] > highest:
         highest = t[r]
         h_letter = "T"
-    print(highest)
 
     consensus += h_letter
 
