@@ -14,23 +14,25 @@ Return: A longest common substring of the collection. (If multiple solutions exi
 """
 
 dna = []
+# super simple string check
 dna_i = [
     "GATTACA",
     "TAGACCA",
     "ATACA"
-]
-# should be AC
+] # result should be AC/TA
 
 f = open("temp_crap/rosalind_lcsm.txt")
 data = f.readlines()
 temp_str = ""
 in_fasta = False
+num_of_strings = 0
 
 for d in data:
     if ">" in d:
         if in_fasta is True:
             in_fasta = False
             dna.append(temp_str)
+            num_of_strings += 1
             temp_str = ""
         else:
             in_fasta = True
@@ -38,34 +40,27 @@ for d in data:
 
     temp_str += d.strip("\n")
 
-#dna = dna_i
-#print(dna)
+print("fasta strings: " + str(num_of_strings))
 
-longest_substr_per_frag = {}
 all_substrings = []
 purge = []
 
 for item in dna:
     everything_but_item = dna.copy()
     everything_but_item.remove(item)
-    print(everything_but_item)
     strlen = 1
     start_pos = 0
 
     for i in range(0, len(dna)):
         for j in range(start_pos, len(item)):
             sub = item[start_pos:start_pos+strlen]
-            # create a list of everything excluding this item, check if in that list? might speed it up
-            if sub not in everything_but_item:
-                print(sub + " not in list")
+
+            if not any(sub in s for s in everything_but_item):
                 start_pos = 0
                 strlen = 1
                 break
 
-            #print(sub)
-            #print(str(j) + " " + str(len(item)))
             if j+1 == len(item):
-                #print("len finish")
                 start_pos += 1
                 strlen = 1
                 break
@@ -73,24 +68,25 @@ for item in dna:
             strlen += 1
             all_substrings.append(sub)
 
-#print(all_substrings)
-
 for fragment in all_substrings:
-    #print(fragment)
+    count = 0
     for item in dna:
-        #print(fragment + " vs " + item + " : match? " + str(fragment in item))
         if fragment not in item:
-            #print("purge")
             purge.append(fragment)
+        else:
+            count += 1
+
+    print("count " + str(count))
+    if count is not num_of_strings:
+        purge.append(fragment)
 
 all_substrings = [i for i in all_substrings if i not in purge]
-#print(len(all_substrings))
-#print(len(purge))
+print(len(purge))
+print(len(all_substrings))
 
 longest_substr = ''
 
 for fragment in all_substrings:
-    #print(fragment)
     if len(fragment) > len(longest_substr):
         longest_substr = fragment
 
