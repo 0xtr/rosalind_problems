@@ -25,14 +25,14 @@ f = open("temp_crap/rosalind_lcsm.txt")
 data = f.readlines()
 temp_str = ""
 in_fasta = False
-num_of_strings = 0
+num_of_fasta_strings = 0
 
 for d in data:
     if ">" in d:
         if in_fasta is True:
             in_fasta = False
             dna.append(temp_str)
-            num_of_strings += 1
+            num_of_fasta_strings += 1
             temp_str = ""
         else:
             in_fasta = True
@@ -40,7 +40,7 @@ for d in data:
 
     temp_str += d.strip("\n")
 
-print("fasta strings: " + str(num_of_strings))
+print("fasta strings: " + str(num_of_fasta_strings))
 
 all_substrings = []
 purge = []
@@ -76,18 +76,18 @@ for fragment in all_substrings:
         else:
             count += 1
 
-    print("count " + str(count))
-    if count is not num_of_strings:
+    if count is not num_of_fasta_strings:
         purge.append(fragment)
 
+all_substrings = list(dict.fromkeys(all_substrings))
 all_substrings = [i for i in all_substrings if i not in purge]
-print(len(purge))
-print(len(all_substrings))
 
 longest_substr = ''
+
+print(all_substrings)
 
 for fragment in all_substrings:
     if len(fragment) > len(longest_substr):
         longest_substr = fragment
 
-print("stringy " + longest_substr)
+print("match " + longest_substr)
