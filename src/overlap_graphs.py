@@ -17,3 +17,17 @@ Given: A collection of DNA strings in FASTA format having total length at most 1
 Return: The adjacency list corresponding to O3. You may return edges in any order.
 """
 
+"""
+>Rosalind_0498
+AAATAAA
+>Rosalind_2391
+AAATTTT
+>Rosalind_2323
+TTTTCCC
+>Rosalind_0442
+AAATCCC
+>Rosalind_5013
+GGGTGGG
+"""
+
+# badly explained, no clue, come back to another time
