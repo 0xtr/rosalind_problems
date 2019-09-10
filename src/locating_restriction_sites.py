@@ -31,15 +31,11 @@ for d in data:
 
     dna_str += d.strip("\n")
 
-print("len " + str(len(dna_str)))
-# dna_str = "TATATA"
-#dna_str = "TTTAAATTTAAA"
 all_substrs = []
 all_reverses = []
 
-# it's not finding pos 1 (2) for len 4
 for i in range(0, len(dna_str)):
-    for j in range(4, 12):
+    for j in range(4, 13):
         if i + j > len(dna_str):
             break
         sub = dna_str[i:i + j]
@@ -49,20 +45,12 @@ for i in range(0, len(dna_str)):
 def is_reverse(key):
     reverse = key.replace("A", "0").replace("T", "1").replace("C", "2").replace("G", "3")
     reverse = reverse.replace("0", "T").replace("1", "A").replace("2", "G").replace("3", "C")
-    #print(key + " vs " + reverse[::-1])
     return key == reverse[::-1]
 
 
 for item in all_substrs:
     if is_reverse(item.fragment) is True:
-        #print("storing: " + item.fragment + " at pos " + str(item.pos))
         all_reverses.append(item)
 
-print(all_reverses)
-print(len(all_reverses))
-
-# key overwriting existing in dict? swap to class
 for item in all_reverses:
-    print(str(item.pos + 1) + " " + str(len(item.fragment)))
-
-print("")
+    print(str(item.pos + 1) + "\t" + str(len(item.fragment)))
